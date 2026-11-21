@@ -1,0 +1,222 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Jobby — Automated Multi-Loop Job Applying for India</title>
+  <link rel="stylesheet" href="./styles.css" />
+</head>
+<body>
+  <div class="container">
+    <header>
+      <a href="./index.html" class="brand">Jobby</a>
+      <div class="nav-actions">
+        <span id="user-badge" class="badge hidden"></span>
+        <a id="admin-link" href="./admin.html" class="btn btn-sm hidden">Owner Admin</a>
+        <button id="logout-btn" class="btn btn-sm hidden">Sign Out</button>
+      </div>
+    </header>
+
+    <!-- Auth Section -->
+    <section id="auth-section" class="card" style="max-width: 440px; margin: 40px auto;">
+      <h1>Sign in to Jobby</h1>
+      <p style="color: var(--muted); font-size: 14px; margin-bottom: 14px;">
+        Run up to 50+ parallel job loops across Indian portals, auto-fill company career pages, and send template outreach emails.
+      </p>
+      <label for="auth-email">Email</label>
+      <input id="auth-email" type="email" placeholder="you@example.com" />
+      <label for="auth-password">Password</label>
+      <input id="auth-password" type="password" placeholder="••••••••" />
+      <div style="display: flex; gap: 10px; margin-top: 16px;">
+        <button id="login-btn" class="btn btn-primary">Sign In</button>
+        <button id="signup-btn" class="btn">Create Account</button>
+      </div>
+      <div id="auth-status" class="status-msg"></div>
+    </section>
+
+    <!-- App Dashboard -->
+    <main id="app-section" class="hidden">
+      <div class="tabs">
+        <button class="tab-btn active" data-tab="loops">My Loops</button>
+        <button class="tab-btn" data-tab="queue">Apply Queue</button>
+        <button class="tab-btn" data-tab="templates">Template Emails</button>
+        <button class="tab-btn" data-tab="profile">Profile &amp; CV</button>
+        <button class="tab-btn" data-tab="upgrade">Upgrade (INR / UPI)</button>
+      </div>
+
+      <!-- Tab: Loops -->
+      <section id="tab-loops" class="tab-panel">
+        <div class="card">
+          <h2>Create a Job Loop <span id="loop-quota" class="badge">0 / 2 loops</span></h2>
+          <div class="grid-2">
+            <div>
+              <label for="loop-title">Loop Name</label>
+              <input id="loop-title" placeholder="e.g. Backend Engineer Bengaluru" />
+            </div>
+            <div>
+              <label for="loop-location">Location</label>
+              <input id="loop-location" value="India" placeholder="Bengaluru, Mumbai, Remote India" />
+            </div>
+          </div>
+          <label for="loop-keywords">Keywords (comma-separated)</label>
+          <input id="loop-keywords" placeholder="python, fastapi, backend, django" />
+          <label for="loop-ats">Company ATS Tokens (optional, e.g. greenhouse:razorpay, lever:cred)</label>
+          <input id="loop-ats" placeholder="greenhouse:razorpay, ashby:zepto" />
+          <label>Target Indian &amp; Global Portals</label>
+          <div class="portal-checks" id="portal-checks">
+            <label><input type="checkbox" value="naukri" checked /> Naukri</label>
+            <label><input type="checkbox" value="linkedin" checked /> LinkedIn India</label>
+            <label><input type="checkbox" value="indeed" checked /> Indeed India</label>
+            <label><input type="checkbox" value="glassdoor" /> Glassdoor</label>
+            <label><input type="checkbox" value="instahyre" checked /> Instahyre</label>
+            <label><input type="checkbox" value="hirist" /> Hirist</label>
+            <label><input type="checkbox" value="cutshort" /> Cutshort</label>
+            <label><input type="checkbox" value="wellfound" /> Wellfound</label>
+            <label><input type="checkbox" value="internshala" /> Internshala</label>
+            <label><input type="checkbox" value="foundit" /> Foundit</label>
+            <label><input type="checkbox" value="shine" /> Shine</label>
+          </div>
+          <div style="margin-top: 16px;">
+            <button id="create-loop-btn" class="btn btn-primary">Create Loop</button>
+            <span id="loop-status" class="status-msg"></span>
+          </div>
+        </div>
+        <div class="card">
+          <h3>Active Loops</h3>
+          <div id="loops-list"></div>
+        </div>
+      </section>
+
+      <!-- Tab: Apply Queue -->
+      <section id="tab-queue" class="tab-panel hidden">
+        <div class="card">
+          <h2>Ready-to-Apply Queue (No Tracking Bloat)</h2>
+          <p style="color: var(--muted); font-size: 14px; margin-bottom: 14px;">
+            Open the Jobby Chrome Extension to auto-apply across portals and company career pages, or send a template email directly.
+          </p>
+          <div id="queue-list"></div>
+        </div>
+      </section>
+
+      <!-- Tab: Template Emails -->
+      <section id="tab-templates" class="tab-panel hidden">
+        <div class="card">
+          <h2>Create Template Email</h2>
+          <p style="color: var(--muted); font-size: 13px; margin-bottom: 10px;">
+            Variables supported: <code>{{company}}</code>, <code>{{role}}</code>, <code>{{name}}</code>, <code>{{skills}}</code>, <code>{{experience}}</code>
+          </p>
+          <label for="tpl-name">Template Name</label>
+          <input id="tpl-name" placeholder="Startup Founder Cold Outreach" />
+          <label for="tpl-subject">Subject</label>
+          <input id="tpl-subject" placeholder="Application for {{role}} at {{company}} — {{name}}" />
+          <label for="tpl-body">Body</label>
+          <textarea id="tpl-body" placeholder="Hi Hiring Team at {{company}},&#10;&#10;I saw the {{role}} opening and would love to contribute my skills in {{skills}}..."></textarea>
+          <div style="margin-top: 14px;">
+            <button id="save-tpl-btn" class="btn btn-primary">Save Template</button>
+            <span id="tpl-status" class="status-msg"></span>
+          </div>
+        </div>
+        <div class="card">
+          <h3>Saved Templates</h3>
+          <div id="templates-list"></div>
+        </div>
+      </section>
+
+      <!-- Tab: Profile & CV -->
+      <section id="tab-profile" class="tab-panel hidden">
+        <div class="card">
+          <h2>Candidate Profile &amp; Resume</h2>
+          <div class="grid-2">
+            <div>
+              <label for="prof-name">Full Name</label>
+              <input id="prof-name" />
+            </div>
+            <div>
+              <label for="prof-phone">Phone (+91)</label>
+              <input id="prof-phone" placeholder="+91 9876543210" />
+            </div>
+            <div>
+              <label for="prof-notice">Notice Period (Days)</label>
+              <input id="prof-notice" type="number" value="30" />
+            </div>
+            <div>
+              <label for="prof-exp">Experience (Years)</label>
+              <input id="prof-exp" type="number" value="2" />
+            </div>
+            <div>
+              <label for="prof-cctc">Current CTC (LPA)</label>
+              <input id="prof-cctc" placeholder="12 LPA" />
+            </div>
+            <div>
+              <label for="prof-ectc">Expected CTC (LPA)</label>
+              <input id="prof-ectc" placeholder="18 LPA" />
+            </div>
+          </div>
+          <label for="prof-skills">Skills (comma-separated)</label>
+          <input id="prof-skills" placeholder="Python, React, SQL, AWS" />
+          <label for="prof-cv">Resume / CV Plain Text (used for AI matching &amp; portal autofill)</label>
+          <textarea id="prof-cv" placeholder="Paste your resume text here..."></textarea>
+          <div style="margin-top: 14px;">
+            <button id="save-prof-btn" class="btn btn-primary">Save Profile</button>
+            <span id="prof-status" class="status-msg"></span>
+          </div>
+        </div>
+      </section>
+
+      <!-- Tab: Upgrade (INR / UPI QR) -->
+      <section id="tab-upgrade" class="tab-panel hidden">
+        <div class="grid-3" style="margin-bottom: 20px;">
+          <div class="card">
+            <h3>Free Looper</h3>
+            <p style="font-size: 24px; font-weight: 700; margin: 8px 0;">₹0 / mo</p>
+            <p style="font-size: 14px; color: var(--muted);">2 parallel loops, 15 applies/day</p>
+          </div>
+          <div class="card">
+            <h3>Pro Looper</h3>
+            <p style="font-size: 24px; font-weight: 700; margin: 8px 0;">₹499 / mo</p>
+            <p style="font-size: 14px; color: var(--muted);">25 parallel loops, 75 applies/day, portal auto-signup</p>
+            <button class="btn btn-primary btn-sm select-plan-btn" data-plan="pro" data-amount="499" style="margin-top: 10px;">Select Pro (₹499)</button>
+          </div>
+          <div class="card">
+            <h3>Max Looper</h3>
+            <p style="font-size: 24px; font-weight: 700; margin: 8px 0;">₹999 / mo</p>
+            <p style="font-size: 14px; color: var(--muted);">50+ parallel loops, 150 applies/day, priority AI answers</p>
+            <button class="btn btn-primary btn-sm select-plan-btn" data-plan="max" data-amount="999" style="margin-top: 10px;">Select Max (₹999)</button>
+          </div>
+        </div>
+
+        <div class="card">
+          <h2>Pay via UPI QR &amp; Submit Confirmation</h2>
+          <div class="grid-2">
+            <div>
+              <div class="qr-box">
+                <div id="upi-qr-svg"></div>
+                <p id="upi-link-text" style="font-size: 13px; margin-top: 8px; color: var(--muted);"></p>
+                <a id="upi-deep-link" href="#" class="btn btn-sm" style="margin-top: 8px;">Open UPI App</a>
+              </div>
+            </div>
+            <div>
+              <label for="upi-plan">Selected Plan</label>
+              <select id="upi-plan">
+                <option value="pro">Pro Looper — ₹499/mo (25 loops)</option>
+                <option value="max">Max Looper — ₹999/mo (50+ loops)</option>
+              </select>
+              <label for="upi-email">Account Email to Upgrade</label>
+              <input id="upi-email" type="email" />
+              <label for="upi-utr">12-Digit UPI Transaction / UTR Number</label>
+              <input id="upi-utr" placeholder="e.g. 432198765432" />
+              <div style="margin-top: 14px;">
+                <button id="submit-upi-btn" class="btn btn-primary">Submit Payment Confirmation</button>
+                <div id="upi-status" class="status-msg"></div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+    </main>
+  </div>
+
+  <script src="./config.js"></script>
+  <script type="module" src="./app.js"></script>
+</body>
+</html>

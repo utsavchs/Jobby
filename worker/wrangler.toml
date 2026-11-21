@@ -1,0 +1,16 @@
+name = "jobby-api"
+main = "src/index.js"
+compatibility_date = "2026-11-01"
+
+[triggers]
+# Daily ping at 03:00 UTC to prevent Supabase Free 7-day inactivity pause
+crons = ["0 3 * * *"]
+
+# Set secrets via `npx wrangler secret put <KEY>`:
+# - SUPABASE_URL
+# - SUPABASE_SERVICE_ROLE_KEY
+# - RESEND_API_KEY
+# - OWNER_EMAIL
+# - HMAC_SECRET
+# - GEMINI_API_KEY (optional, for AI fit scoring & screening answers)
+# - FROM_EMAIL (e.g. "Jobby <noreply@yourdomain.com>")

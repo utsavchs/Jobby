@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Jobby Owner Admin Console</title>
+  <link rel="stylesheet" href="./styles.css" />
+</head>
+<body>
+  <div class="container">
+    <header>
+      <a href="./index.html" class="brand">Jobby Admin</a>
+      <div class="nav-actions">
+        <a href="./index.html" class="btn btn-sm">Back to App</a>
+      </div>
+    </header>
+
+    <div id="admin-gate" class="card">Checking owner permissions...</div>
+
+    <main id="admin-main" class="hidden">
+      <div class="card">
+        <h2>Pending UPI Payment Requests</h2>
+        <div id="upi-requests-table"></div>
+      </div>
+
+      <div class="card">
+        <h2>All User Accounts (Owner Control)</h2>
+        <input id="search-email" placeholder="Filter by email..." style="max-width: 320px; margin-bottom: 12px;" />
+        <div id="accounts-table"></div>
+      </div>
+    </main>
+  </div>
+  <script src="./config.js"></script>
+  <script type="module" src="./admin.js"></script>
+</body>
+</html>

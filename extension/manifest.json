@@ -1,0 +1,51 @@
+{
+  "manifest_version": 3,
+  "name": "Jobby Auto-Apply Bot (India)",
+  "version": "1.0.0",
+  "description": "Auto-apply on Indian job portals & company career pages with auto-signup and human-in-the-loop help.",
+  "permissions": ["storage", "activeTab", "scripting", "notifications"],
+  "host_permissions": [
+    "https://*.naukri.com/*",
+    "https://*.linkedin.com/*",
+    "https://*.indeed.com/*",
+    "https://*.instahyre.com/*",
+    "https://*.hirist.tech/*",
+    "https://*.cutshort.io/*",
+    "https://*.wellfound.com/*",
+    "https://*.foundit.in/*",
+    "https://*.internshala.com/*",
+    "https://*.shine.com/*",
+    "https://boards.greenhouse.io/*",
+    "https://jobs.lever.co/*",
+    "https://jobs.ashbyhq.com/*",
+    "https://*.myworkdayjobs.com/*"
+  ],
+  "background": {
+    "service_worker": "background.js"
+  },
+  "action": {
+    "default_popup": "popup.html"
+  },
+  "content_scripts": [
+    {
+      "matches": [
+        "https://*.naukri.com/*",
+        "https://*.linkedin.com/*",
+        "https://*.indeed.com/*",
+        "https://*.instahyre.com/*",
+        "https://*.hirist.tech/*",
+        "https://*.cutshort.io/*",
+        "https://*.wellfound.com/*",
+        "https://*.foundit.in/*",
+        "https://*.internshala.com/*",
+        "https://*.shine.com/*",
+        "https://boards.greenhouse.io/*",
+        "https://jobs.lever.co/*",
+        "https://jobs.ashbyhq.com/*",
+        "https://*.myworkdayjobs.com/*"
+      ],
+      "js": ["content.js"],
+      "run_at": "document_idle"
+    }
+  ]
+}
